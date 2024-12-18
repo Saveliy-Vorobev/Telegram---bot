@@ -1,17 +1,20 @@
 import logging
-import os
 from aiogram import Bot, Dispatcher
 from aiogram.types import Message             # ловим все обновления этого типа 
 from aiogram.filters.command import Command   # обрабатываем команды /start
+from config import TOKEN
 
 # Инициализация объектов
-TOKEN = os.getenv("TOKEN")
 bot = Bot(token=TOKEN)                        # Создаем объект бота
 dp = Dispatcher()                             # Создаем объект диспетчера. Все хэндлеры(обработчики) должны быть подключены к диспетчеру
+
 logging.basicConfig(
     level=logging.INFO,
-    filename="app.log",
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('app.log', mode='a', encoding='utf-8'), 
+        logging.StreamHandler()  
+    ]
 )
 
 # Задаем словарь для транслитерации
